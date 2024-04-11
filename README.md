@@ -25,6 +25,11 @@ Or, include it directly in your HTML file:
 // Load a WebAssembly module
 const instance = await wasmMan.load('path/to/module.wasm');
 
+// Call exported WebAssembly functions
+const result = instance.exports.addNumbers(2, 3);
+
+// or
+
 // Create a proxy object for convenient function invocation
 const exports = wasmMan.create('path/to/module.wasm');
 
