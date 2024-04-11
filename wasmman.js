@@ -18,20 +18,25 @@ const wasmMan = (function() {
     },
 
     // 创建 wasm 实例的导出对象
-    create(wasmUri) {
-      return new Proxy(this.load(wasmUri), {
+  create(wasmUri) {      const instancePromise = this.load(wasmUri);
+      const instanceProxy = new Proxy(instancePromise, {
         get(target, prop) {
-          // 如果是导出的 wasm 函数则返回函数调用的包装
-          if (target.instance.exports[prop] instanceof Function) {
-            return target.instance.exports[prop].bind(target.instance.exports);
+          if (prop === 'then') {
+            return target.then.bind(target);
           }
-          // 否则直接返回导出值
-          return target.instance.exports[prop];
+          return async (...args) => {
+            const instance = await target;
+            if (instance.exports[prop] instanceof Function) {
+              return instance.exports[prop].bind(instance.exports)(...args);
+            }
+            return instance.exports[prop];
+          };
         }
       });
-    }
-  }
 
+      instanceProxy.query = this.query.bind(instanceProxy);
+      return instanceProxy;
+    },
 
     async function query() {
       const exports = this.instance.exports;
