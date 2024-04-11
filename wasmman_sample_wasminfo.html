@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>WebAssembly Module Loader</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    input[type="text"] {
+      width: 300px;
+      padding: 5px;
+      font-size: 16px;
+    }
+    button {
+      padding: 5px 10px;
+      font-size: 16px;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+      text-align: left;
+      max-width: 400px;
+      margin: 20px auto;
+    }
+    li {
+      padding: 5px;
+      border-bottom: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <h1>WebAssembly Module Loader</h1>
+  <input type="text" id="wasmUrl" placeholder="Enter WebAssembly module URL">
+  <button onclick="loadAndQueryModule()">Load and Query</button>
+  <ul id="exportedItems"></ul>
+
+  <script src="wasmMan.js"></script>
+  <script>
+    function loadAndQueryModule() {
+      const wasmUrl = document.getElementById('wasmUrl').value;
+      const exports = wasmMan.create(wasmUrl);
+
+      const exportedItemsList = document.getElementById('exportedItems');
+      exportedItemsList.innerHTML = ''; // Clear previous items
+
+      const exportedItems = exports.query();
+      exportedItems.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.name} (${item.type})`;
+        exportedItemsList.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>
