@@ -32,6 +32,21 @@ const wasmMan = (function() {
     }
   }
 
+
+    query() {
+      const exports = this.instance.exports;
+      const exportedItems = Object.keys(exports);
+
+      return exportedItems.map(item => {
+        const itemType = typeof exports[item];
+        return { name: item, type: itemType };
+      });
+    }
+  }
+
+
+
+  
   // 实用工具函数,用于加载 wasm 字节码
   async function fetchAndInstantiate(uri) {
     const response = await fetch(uri);
