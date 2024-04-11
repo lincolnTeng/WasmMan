@@ -33,7 +33,7 @@ const wasmMan = (function() {
   }
 
 
-    query() {
+    async function query() {
       const exports = this.instance.exports;
       const exportedItems = Object.keys(exports);
 
