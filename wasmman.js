@@ -42,7 +42,7 @@ const wasmMan = (function() {
         return { name: item, type: itemType };
       });
     }
-  }
+  
 
 
 
