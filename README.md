@@ -1,4 +1,4 @@
-# WasmMan
+# WasmMan   edit online by prose.io
 WasmMan.js is a lightweight JavaScript library that simplifies loading and using WebAssembly modules in front-end development.It provides a convenient interface for fetching, instantiating, and invoking WebAssembly functions, making it easier to leverage the power of WebAssembly in web applications.
 
 ## Features
